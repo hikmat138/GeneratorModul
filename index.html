@@ -165,11 +165,11 @@
                 <h5 class="fw-bold border-bottom pb-2 mb-3 text-secondary"><i class="fa-solid fa-pen-to-square me-2"></i>Pengaturan & Input Data</h5>
                 
                 <form id="rpmForm">
-                    <!-- API Key Section -->
+                    <!-- API Key Section dengan Auto-Save LocalStorage -->
                     <div class="mb-3 bg-light p-3 rounded border">
                         <label class="form-label text-primary"><i class="fa-solid fa-key me-1"></i> Gemini API Key</label>
-                        <input type="password" id="apiKey" class="form-control form-control-sm" placeholder="API Key Otomatis Terpasang" value="">
-                        <small class="text-muted d-block mt-1">API Key sudah terpasang otomatis.</small>
+                        <input type="password" id="apiKey" class="form-control form-control-sm" placeholder="Masukkan API Key Gemini Anda di sini...">
+                        <small class="text-muted d-block mt-1">🔑 Cukup ketik sekali, otomatis tersimpan aman di browser Anda.</small>
                     </div>
 
                     <!-- Identitas Dasar -->
@@ -223,7 +223,7 @@
                         <textarea id="materiPembelajaran" class="form-control form-control-sm" rows="2" placeholder="Masukkan ringkasan materi spesifik pembelajaran..."></textarea>
                     </div>
 
-                    <!-- Pilihan Tahapan Kegiatan Inti (Semua Bebas Dicentang) -->
+                    <!-- Pilihan Tahapan Kegiatan Inti -->
                     <div class="mb-3 p-3 border rounded bg-light">
                         <label class="form-label d-block text-primary"><i class="fa-solid fa-layer-group me-1"></i> Pilih Tahapan Kegiatan Inti Pertemuan Ini:</label>
                         <div class="form-check form-check-inline">
@@ -238,7 +238,7 @@
                             <input class="form-check-input" type="checkbox" id="chkMerefleksi" value="Merefleksi">
                             <label class="form-check-label fw-bold" for="chkMerefleksi">Merefleksi</label>
                         </div>
-                        <small class="text-muted d-block mt-1">Bisa pilih salah satu saja (misal: hanya Mengaplikasi untuk Pertemuan 2) atau kombinasinya.</small>
+                        <small class="text-muted d-block mt-1">Bisa pilih salah satu saja atau kombinasinya.</small>
                     </div>
 
                     <!-- Informasi Pengesahan -->
@@ -289,7 +289,6 @@
             </div>
 
             <div class="document-container" id="documentOutput">
-                <!-- Konten Rencana Pembelajaran Mendalam (RPM) di-render di sini -->
                 <div class="text-center py-5 text-muted">
                     <i class="fa-solid fa-file-circle-plus fa-3x mb-3 text-secondary"></i>
                     <p>Silakan isi form di sebelah kiri dan klik <strong>"Jana Otomatis Lengkap dengan AI"</strong> untuk menyusun modul ajar RPM Anda secara otomatis.</p>
@@ -300,6 +299,19 @@
 </div>
 
 <script>
+    // Load API Key dari LocalStorage saat halaman dibuka
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedApiKey = localStorage.getItem('gemini_rpm_api_key');
+        if (savedApiKey) {
+            document.getElementById('apiKey').value = savedApiKey;
+        }
+    });
+
+    // Simpan API Key ke LocalStorage otomatis saat diketik
+    document.getElementById('apiKey').addEventListener('input', (e) => {
+        localStorage.setItem('gemini_rpm_api_key', e.target.value.trim());
+    });
+
     // Data Default Contoh
     const defaultData = {
         babTopik: "Lambang Burung Garuda Pancasila",
@@ -319,6 +331,11 @@
         const incMemahami = document.getElementById('chkMemahami').checked;
         const incMengaplikasi = document.getElementById('chkMengaplikasi').checked;
         const incMerefleksi = document.getElementById('chkMerefleksi').checked;
+
+        if (!apiKey) {
+            Swal.fire('API Key Kosong', 'Mohon masukkan Gemini API Key Anda terlebih dahulu pada kolom di atas.', 'warning');
+            return;
+        }
 
         if (!incMemahami && !incMengaplikasi && !incMerefleksi) {
             Swal.fire('Perhatian', 'Pilih minimal satu tahapan Kegiatan Inti (Memahami, Mengaplikasi, atau Merefleksi).', 'warning');
