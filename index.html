@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Modul Ajar RPM Kelas 3 SD</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Font Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #2563eb;
+            --header-bg: #e0f2fe;
+            --header-text: #0369a1;
+            --border-color: #000000;
+        }
+
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #334155;
+        }
+
+        .card-custom {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: #ffffff;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        /* Styling Preview Dokumen RPM Resmi */
+        .document-container {
+            background: white;
+            padding: 30px 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            color: #000;
+            font-family: 'Arial', sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .doc-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 14pt;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #000;
+            padding-bottom: 8px;
+        }
+
+        .section-header {
+            background-color: #0284c7;
+            color: white;
+            font-weight: bold;
+            padding: 6px 12px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 11pt;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .doc-table th, .doc-table td {
+            border: 1px solid #000;
+            padding: 8px 10px;
+            vertical-align: top;
+            font-size: 10.5pt;
+        }
+
+        .doc-table th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .table-sublabel {
+            width: 25%;
+            font-weight: bold;
+            background-color: #f8fafc;
+        }
+
+        .list-custom {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .signature-table {
+            width: 100%;
+            margin-top: 40px;
+            border: none !important;
+        }
+
+        .signature-table td {
+            border: none !important;
+            text-align: center;
+            width: 50%;
+            vertical-align: bottom;
+        }
+
+        /* Print CSS optimization */
+        @media print {
+            body {
+                background: white;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .document-container {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+            .section-header {
+                background-color: #f1f5f9 !important;
+                color: #000 !important;
+                border: 1px solid #000;
+                -webkit-print-color-adjust: exact;
+            }
+            .doc-table th {
+                background-color: #f8fafc !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body class="py-4">
+
+<div class="container-fluid px-4">
+    <!-- Header App -->
+    <div class="row mb-4 no-print">
+        <div class="col-12 text-center">
+            <h2 class="fw-bold text-primary"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generator Modul Ajar RPM Kelas 3 SD</h2>
+            <p class="text-muted">Disusun Khusus Sesuai Rencana Pembelajaran Mendalam (RPM) SD Negeri Ranca Tales</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- FORM INPUT PANEL -->
+        <div class="col-lg-5 no-print">
+            <div class="card card-custom p-4">
+                <h5 class="fw-bold border-bottom pb-2 mb-3 text-secondary"><i class="fa-solid fa-pen-to-square me-2"></i>Pengaturan & Input Data</h5>
+                
+                <form id="rpmForm">
+                    <!-- API Key Section -->
+                    <div class="mb-3 bg-light p-3 rounded border">
+                        <label class="form-label text-primary"><i class="fa-solid fa-key me-1"></i> Gemini API Key</label>
+                        <input type="password" id="apiKey" class="form-control form-control-sm" placeholder="API Key Otomatis Terpasang" value="">
+                        <small class="text-muted d-block mt-1">API Key sudah terpasang otomatis.</small>
+                    </div>
+
+                    <!-- Identitas Dasar -->
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Guru</label>
+                            <input type="text" id="namaGuru" class="form-control form-control-sm" value="HIKMATULLAH, S.Pd., Gr.">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Sekolah</label>
+                            <input type="text" id="namaSekolah" class="form-control form-control-sm" value="SD NEGERI RANCA TALES">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tahun Ajaran</label>
+                            <input type="text" id="tahunAjaran" class="form-control form-control-sm" value="2026/2027">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mata Pelajaran</label>
+                            <input type="text" id="mapel" class="form-control form-control-sm" value="Pendidikan Pancasila">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Kelas / Semester / Fase</label>
+                            <input type="text" id="kelasSemester" class="form-control form-control-sm" value="3/I (Satu)/B">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Bab / Topik</label>
+                            <input type="text" id="babTopik" class="form-control form-control-sm" placeholder="Contoh: Lambang Burung Garuda">
+                        </div>
+                    </div>
+
+                    <!-- Pengaturan Alokasi & Pertemuan -->
+                    <div class="row g-2 mb-3 bg-light p-2 rounded">
+                        <div class="col-md-6">
+                            <label class="form-label">Alokasi Waktu</label>
+                            <input type="text" id="alokasiWaktu" class="form-control form-control-sm" value="2 X 35 Menit">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Pertemuan Ke-</label>
+                            <input type="number" id="pertemuanKe" class="form-control form-control-sm" value="1" min="1">
+                        </div>
+                    </div>
+
+                    <!-- Tujuan & Materi Pembelajaran Utama -->
+                    <div class="mb-3">
+                        <label class="form-label">Tujuan Pembelajaran (TP)</label>
+                        <textarea id="tujuanPembelajaran" class="form-control form-control-sm" rows="2" placeholder="Masukkan Tujuan Pembelajaran yang ingin dicapai..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Pokok Materi Pembelajaran</label>
+                        <textarea id="materiPembelajaran" class="form-control form-control-sm" rows="2" placeholder="Masukkan ringkasan materi spesifik pembelajaran..."></textarea>
+                    </div>
+
+                    <!-- Pilihan Tahapan Kegiatan Inti (Semua Bebas Dicentang) -->
+                    <div class="mb-3 p-3 border rounded bg-light">
+                        <label class="form-label d-block text-primary"><i class="fa-solid fa-layer-group me-1"></i> Pilih Tahapan Kegiatan Inti Pertemuan Ini:</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="chkMemahami" value="Memahami" checked>
+                            <label class="form-check-label fw-bold" for="chkMemahami">Memahami</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="chkMengaplikasi" value="Mengaplikasi">
+                            <label class="form-check-label fw-bold" for="chkMengaplikasi">Mengaplikasi</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="chkMerefleksi" value="Merefleksi">
+                            <label class="form-check-label fw-bold" for="chkMerefleksi">Merefleksi</label>
+                        </div>
+                        <small class="text-muted d-block mt-1">Bisa pilih salah satu saja (misal: hanya Mengaplikasi untuk Pertemuan 2) atau kombinasinya.</small>
+                    </div>
+
+                    <!-- Informasi Pengesahan -->
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Kepala Sekolah</label>
+                            <input type="text" id="namaKepsek" class="form-control form-control-sm" value="Totong Sastra Mulyana, S.Pd., M.Pd.">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">NIP Kepala Sekolah</label>
+                            <input type="text" id="nipKepsek" class="form-control form-control-sm" value="19710323 199703 1 003">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tempat & Tanggal</label>
+                            <input type="text" id="tempatTanggal" class="form-control form-control-sm" value="Taktakan, 26 Oktober 2026">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">NIP Guru Kelas</label>
+                            <input type="text" id="nipGuru" class="form-control form-control-sm" value="-">
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2">
+                        <button type="button" id="btnGenerateAI" class="btn btn-primary btn-md fw-bold">
+                            <i class="fa-solid fa-robot me-2"></i>Jana Otomatis Lengkap dengan AI
+                        </button>
+                        <button type="button" id="btnGenerateManual" class="btn btn-outline-secondary btn-sm">
+                            <i class="fa-solid fa-bolt me-1"></i>Buat Format Standar (Tanpa AI)
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- DOCUMENT PREVIEW PANEL -->
+        <div class="col-lg-7">
+            <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+                <h5 class="fw-bold m-0"><i class="fa-solid fa-file-contract me-2"></i>Pratinjau Dokumen Modul Ajar RPM</h5>
+                <div>
+                    <button class="btn btn-sm btn-success me-1" onclick="window.print()">
+                        <i class="fa-solid fa-print me-1"></i>Cetak / Simpan PDF
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary" onclick="copyDocumentText()">
+                        <i class="fa-solid fa-copy me-1"></i>Salin Teks
+                    </button>
+                </div>
+            </div>
+
+            <div class="document-container" id="documentOutput">
+                <!-- Konten Rencana Pembelajaran Mendalam (RPM) di-render di sini -->
+                <div class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-file-circle-plus fa-3x mb-3 text-secondary"></i>
+                    <p>Silakan isi form di sebelah kiri dan klik <strong>"Jana Otomatis Lengkap dengan AI"</strong> untuk menyusun modul ajar RPM Anda secara otomatis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data Default Contoh
+    const defaultData = {
+        babTopik: "Lambang Burung Garuda Pancasila",
+        tujuan: "Murid dapat mengenal dan mengidentifikasi bentuk serta bagian-bagian Lambang Negara Burung Garuda Pancasila dengan benar.",
+        materi: "Pengenalan bentuk Lambang Burung Garuda Pancasila, makna jumlah bulu pada sayap, ekor, dan leher, serta cengkraman pita 'Bhinneka Tunggal Ika'."
+    };
+
+    document.getElementById('babTopik').value = defaultData.babTopik;
+    document.getElementById('tujuanPembelajaran').value = defaultData.tujuan;
+    document.getElementById('materiPembelajaran').value = defaultData.materi;
+
+    document.getElementById('btnGenerateAI').addEventListener('click', async () => {
+        const apiKey = document.getElementById('apiKey').value.trim();
+        const tp = document.getElementById('tujuanPembelajaran').value.trim();
+        const materi = document.getElementById('materiPembelajaran').value.trim();
+
+        const incMemahami = document.getElementById('chkMemahami').checked;
+        const incMengaplikasi = document.getElementById('chkMengaplikasi').checked;
+        const incMerefleksi = document.getElementById('chkMerefleksi').checked;
+
+        if (!incMemahami && !incMengaplikasi && !incMerefleksi) {
+            Swal.fire('Perhatian', 'Pilih minimal satu tahapan Kegiatan Inti (Memahami, Mengaplikasi, atau Merefleksi).', 'warning');
+            return;
+        }
+
+        if (!tp || !materi) {
+            Swal.fire('Perhatian', 'Mohon isi Tujuan Pembelajaran dan Pokok Materi Pembelajaran terlebih dahulu.', 'warning');
+            return;
+        }
+
+        Swal.fire({
+            title: 'Menyusun Modul Ajar...',
+            text: 'Gemini AI sedang merancang RPM yang akurat dan lengkap sesuai instruksi.',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+
+        try {
+            const aiResult = await callGeminiAPI(apiKey, tp, materi);
+            renderDocument(aiResult);
+            Swal.fire('Berhasil!', 'Modul Ajar RPM berhasil dibuat dengan lengkap.', 'success');
+        } catch (error) {
+            console.error(error);
+            Swal.fire('Terjadi Kesalahan', 'Gagal menghasilkan modul dengan AI: ' + error.message, 'error');
+        }
+    });
+
+    document.getElementById('btnGenerateManual').addEventListener('click', () => {
+        generateModuleManual();
+    });
+
+    async function callGeminiAPI(apiKey, tp, materi) {
+        const babTopik = document.getElementById('babTopik').value;
+        const mapel = document.getElementById('mapel').value;
+        
+        const incMemahami = document.getElementById('chkMemahami').checked;
+        const incMengaplikasi = document.getElementById('chkMengaplikasi').checked;
+        const incMerefleksi = document.getElementById('chkMerefleksi').checked;
+
+        let selectedStages = [];
+        if (incMemahami) selectedStages.push("MEMAHAMI");
+        if (incMengaplikasi) selectedStages.push("MENGAPLIKASI");
+        if (incMerefleksi) selectedStages.push("MEREFLEKSI");
+
+        const promptText = `
+        Anda adalah pakar kurikulum SD di Indonesia. Tugas Anda adalah menyusun Rencana Pembelajaran Mendalam (RPM) Kelas 3 SD Kurikulum Merdeka secara presisi.
+
+        INPUT DATA:
+        - Mata Pelajaran: ${mapel}
+        - Bab/Topik: ${babTopik}
+        - Tujuan Pembelajaran (TP): ${tp}
+        - Pokok Materi Spesifik: ${materi}
+        - Tahapan Kegiatan Inti yang DIPILIH GURU: ${selectedStages.join(', ')}
+
+        INSTRUKSI KETAT:
+        1. Gunakan istilah "murid" secara konsisten (JANGAN gunakan "peserta didik").
+        2. FOKUS MATERI HARUS SANGAT PRESISI: HANYA bahas pokok materi "${materi}" dan "${babTopik}". JANGAN melebar ke materi lain yang tidak disebutkan di input.
+        3. Dimensi Profil Lulusan (DPL): Pilih 2 SAMPAI 4 DIMENSI SAJA dari 8 berikut yang paling relevan:
+           a. Keimanan dan ketakwaan terhadap Tuhan Yang Maha Esa
+           b. Kewargaan
+           c. Penalaran kritis
+           d. Kreativitas
+           e. Kolaborasi
+           f. Kemandirian
+           g. Kesehatan
+           h. Komunikasi
+        4. Model Pembelajaran: Pilihlah model pembelajaran yang BENAR-BENAR sesuai dengan TP dan materi.
+        5. KEGIATAN AWAL: HARUS diawali dengan: (1) Berdoa bersama secara berkesadaran (Mindful), (2) Menyapa murid dengan hangat, menanyakan kabar, dan mengecek kehadiran murid. TIDAK BOLEH ada latihan bernapas/afirmasi.
+        6. TAHAPAN KEGIATAN INTI:
+           - Hanya buatkan uraian untuk tahapan yang DIPILIH (${selectedStages.join(', ')}).
+           - Tahapan yang TIDAK dipilih, array-nya WAJIB diisi kosong [].
+           - Uraian MEMAHAMI: Fokus murni pemahaman konsep (mengamati gambar/video, menyimak penjelasan guru, tanya jawab interaktif). TANPA LKPD/tantangan.
+           - Uraian MENGAPLIKASI: Fokus pengerjaan LKPD mandiri/kelompok atau penyelesaian tantangan.
+           - Uraian MEREFLEKSI: Fokus review, pembuktian pemahaman, dan refleksi hasil belajar.
+
+        Format Output HARUS berupa JSON valid tanpa teks lain:
+        {
+          "identifikasiMurid": {
+            "pengetahuanAwal": "...",
+            "minatBelajar": "...",
+            "latarBelakang": "...",
+            "kebutuhanBelajar": "..."
+          },
+          "identifikasiMateri": {
+            "jenisPengetahuan": "Faktual dan Konseptual",
+            "relevansiKehidupan": "...",
+            "tingkatKesulitan": "...",
+            "strukturMateri": "...",
+            "integrasiNilai": "..."
+          },
+          "dimensiProfilLulusan": [
+             {"nama": "...", "uraian": "..."}
+          ],
+          "capaianPembelajaran": "...",
+          "lintasDisiplinIlmu": "...",
+          "indikatorTP": ["...", "..."],
+          "praktikPedagogis": {
+            "pendekatan": "Deep Learning (Pembelajaran Mendalam)",
+            "model": "...",
+            "metode": "Mindful (berkesadaran), Meaningful (bermakna), dan Joyful (menggembirakan)",
+            "strategi": "..."
+          },
+          "mitraPembelajaran": {
+            "guru": "...",
+            "murid": "...",
+            "temanSebaya": "...",
+            "orangTua": "..."
+          },
+          "lingkunganPembelajaran": {
+            "ruangFisik": "...",
+            "ruangVirtual": "...",
+            "ruangSosial": "...",
+            "budayaBelajar": "..."
+          },
+          "pemanfaatanDigital": {
+            "media": "...",
+            "bahanAjar": "..."
+          },
+          "pengalamanBelajar": {
+            "kegiatanAwal": [
+              "Guru memandu murid berdoa bersama secara berkesadaran (Mindful).",
+              "Guru menyapa murid dengan hangat, menanyakan kabar, dan mengecek kehadiran murid.",
+              "..."
+            ],
+            "kegiatanIntiMemahami": ${incMemahami ? '["..."]' : '[]'},
+            "kegiatanIntiMengaplikasi": ${incMengaplikasi ? '["..."]' : '[]'},
+            "kegiatanIntiMerefleksi": ${incMerefleksi ? '["..."]' : '[]'},
+            "kegiatanPenutup": ["...", "..."]
+          },
+          "asesmen": {
+            "diagnostik": {"teknik": "...", "tujuan": "...", "instrumen": "..."},
+            "formatif": {"teknik": "...", "tujuan": "...", "instrumen": "..."},
+            "sumatif": {"teknik": "...", "tujuan": "...", "bentukSoal": "..."}
+          },
+          "remedialPengayaan": {
+            "remedial": {"sasaran": "...", "tujuan": "...", "teknik": "..."},
+            "pengayaan": {"sasaran": "...", "tujuan": "...", "teknik": "..."}
+          },
+          "refleksi": {
+            "refleksiMurid": ["..."],
+            "refleksiGuru": ["..."]
+          }
+        }
+        `;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: promptText }] }]
+            })
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.error?.message || 'Gagal menghubungi Gemini API');
+        }
+
+        const data = await response.json();
+        const rawText = data.candidates[0].content.parts[0].text;
+        const cleanJSON = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+        return JSON.parse(cleanJSON);
+    }
+
+    function generateModuleManual() {
+        const incMemahami = document.getElementById('chkMemahami').checked;
+        const incMengaplikasi = document.getElementById('chkMengaplikasi').checked;
+        const incMerefleksi = document.getElementById('chkMerefleksi').checked;
+
+        if (!incMemahami && !incMengaplikasi && !incMerefleksi) {
+            Swal.fire('Perhatian', 'Pilih minimal satu tahapan Kegiatan Inti.', 'warning');
+            return;
+        }
+
+        const dummyData = {
+            identifikasiMurid: {
+                pengetahuanAwal: "Murid pernah melihat gambar Lambang Burung Garuda Pancasila di dinding kelas atau buku paket.",
+                minatBelajar: "Murid menyukai pengamatan gambar visual berukuran besar dan bernyanyi lagu nasional.",
+                latarBelakang: "Murid terbiasa melihat lambang negara pada dokumen sekolah atau atribut resmi.",
+                kebutuhanBelajar: "Visual: Mengamati poster/gambar Lambang Burung Garuda Pancasila secara detail."
+            },
+            identifikasiMateri: {
+                jenisPengetahuan: "Faktual dan Konseptual",
+                relevansiKehidupan: "Sangat relevan untuk menanamkan rasa cinta tanah air dan pengenalan simbol negara sejak dini.",
+                tingkatKesulitan: "Sedang",
+                strukturMateri: "Mengenali bentuk Burung Garuda, mengidentifikasi bagian-bagian tubuh (bulu leher, sayap, ekor), dan pita cengkraman.",
+                integrasiNilai: "Mengembangkan karakter Beriman, Bertakwalah kepada Tuhan YME, Kewargaan, serta Penalaran Kritis."
+            },
+            dimensiProfilLulusan: [
+                { nama: "Kewargaan", uraian: "Mengenal dan menghormati simbol dan lambang negara Indonesia." },
+                { nama: "Penalaran Kritis", uraian: "Mengidentifikasi detail bagian-bagian lambang negara secara cermat." }
+            ],
+            capaianPembelajaran: "Murid mampu mengidentifikasi lambang negara Garuda Pancasila dan menceritakan makna bagian-bagiannya secara sederhana.",
+            lintasDisiplinIlmu: "Seni Budaya (Mengamati keindahan lambang) & Bahasa Indonesia (Menceritakan hasil pengamatan).",
+            indikatorTP: [
+                "Melalui pengamatan gambar visual, murid dapat mengidentifikasi bentuk Burung Garuda sebagai lambang negara Indonesia secara tepat.",
+                "Melalui tanya jawab interaktif, murid dapat menyebutkan bagian-bagian fisik pada lambang Burung Garuda secara cermat."
+            ],
+            praktikPedagogis: {
+                pendekatan: "Deep Learning (Pembelajaran Mendalam)",
+                model: "Direct Instruction (Pembelajaran Langsung)",
+                metode: "Mindful (berkesadaran), Meaningful (bermakna), dan Joyful (menggembirakan)",
+                strategi: "Pengamatan visual, tanya jawab interaktif, dan ceramah bermakna."
+            },
+            mitraPembelajaran: {
+                guru: "Fasilitator dan pemandu pengamatan gambar Lambang Burung Garuda.",
+                murid: "Subjek aktif yang mengamati dan menjawab pertanyaan.",
+                temanSebaya: "Rekan menyimak dan berbagi pengalaman.",
+                orangTua: "Pendamping mengenalkan simbol negara di rumah."
+            },
+            lingkunganPembelajaran: {
+                ruangFisik: "Ruang Kelas 3 yang rapi dengan poster Garuda Pancasila terpasang di depan kelas.",
+                ruangVirtual: "Media gambar visual resolusi tinggi.",
+                ruangSosial: "Suasana kelas yang kondusif dan penuh rasa kebangsaan.",
+                budayaBelajar: "Tertib, cermat dalam mengamati, dan berani mengemukakan pendapat."
+            },
+            pemanfaatanDigital: {
+                media: "Proyektor / Tampilan Gambar Visual Lambang Garuda.",
+                bahanAjar: "Buku Siswa Pendidikan Pancasila Kelas 3 & Poster Garuda Pancasila."
+            },
+            pengalamanBelajar: {
+                kegiatanAwal: [
+                    "Guru memandu murid berdoa bersama secara berkesadaran (Mindful).",
+                    "Guru menyapa murid dengan hangat, menanyakan kabar, dan mengecek kehadiran murid.",
+                    "Guru mengaitkan materi dengan menunjuk lambang Garuda yang ada di dinding kelas.",
+                    "Guru menyampaikan tujuan pembelajaran hari ini tentang mengamati Lambang Burung Garuda."
+                ],
+                kegiatanIntiMemahami: incMemahami ? [
+                    "[Menggembirakan] Guru mengajak murid menyanyikan lagu 'Garuda Pancasila' bersama-sama untuk membangun semangat.",
+                    "[Berkesadaran] Guru menampilkan gambar besar Lambang Burung Garuda dan memandu murid mengamati detail bentuk kepala, sayap, ekor, dan pita yang dicengkeram.",
+                    "[Bermakna] Guru mengadakan tanya jawab interaktif mengenai ciri khas Burung Garuda sebagai gagah dan megahnya lambang negara kita."
+                ] : [],
+                kegiatanIntiMengaplikasi: incMengaplikasi ? [
+                    "[Berkesadaran] Murid mengerjakan lembar pengamatan gambar Lambang Burung Garuda secara mandiri.",
+                    "[Bermakna] Murid mewarnai atau memberi label bagian-bagian Burung Garuda pada LKPD."
+                ] : [],
+                kegiatanIntiMerefleksi: incMerefleksi ? [
+                    "[Menggembirakan] Guru bersama murid mencocokkan hasil pengamatan bagian-bagian lambang negara.",
+                    "[Bermakna] Murid mengungkapkan perasaannya setelah berhasil mengenali Lambang Negara Burung Garuda."
+                ] : [],
+                kegiatanPenutup: [
+                    "Guru bersama murid merangkum kembali poin penting tentang Lambang Burung Garuda Pancasila.",
+                    "Guru memandu refleksi singkat tentang kegiatan hari ini.",
+                    "Guru mengajak seluruh murid berdoa bersama secara tertib untuk mengakhiri pembelajaran."
+                ]
+            },
+            asesmen: {
+                diagnostik: { teknik: "Tanya Jawab Lisan Visual", tujuan: "Mengukur pengetahuan awal murid tentang Burung Garuda", instrumen: "Pertanyaan pemantik tentang gambar Garuda di kelas." },
+                formatif: { teknik: "Observasi Keterlibatan & Tanya Jawab", tujuan: "Memantau kecermatan murid saat mengamati gambar", instrumen: "Lembar Catatan Observasi Guru" },
+                sumatif: { teknik: "Tes Lisan / Tulis Sederhana", tujuan: "Menilai kemampuan murid mengidentifikasi bagian lambang negara", bentukSoal: "Isian Singkat / Menyebutkan Bagian Lambang" }
+            },
+            remedialPengayaan: {
+                remedial: { sasaran: "Murid yang belum dapat menyebutkan bagian Lambang Garuda", tujuan: "Membantu pengenalan ulang bentuk fisik lambang", teknik: "Pendampingan khusus dengan poster visual." },
+                pengayaan: { sasaran: "Murid yang sudah mahir", tujuan: "Memperluas wawasan", teknik: "Mencari tahu jumlah bulu pada Lambang Garuda." }
+            },
+            refleksi: {
+                refleksiMurid: ["Bagaimana perasaan kalian saat mengamati Lambang Burung Garuda hari ini?", "Bagian mana dari Burung Garuda yang paling menarik menurut kalian?"],
+                refleksiGuru: ["Apakah media visual Lambang Burung Garuda berhasil memfokuskan perhatian murid?", "Apakah murid dapat menyebutkan bagian-bagian lambang secara tepat?"]
+            }
+        };
+
+        renderDocument(dummyData);
+        Swal.fire('Format Standar Dibuat', 'Dokumen RPM berhasil dibuat dengan templat standar.', 'info');
+    }
+
+    function renderDocument(data) {
+        const getVal = (id) => document.getElementById(id).value;
+        const pertemuanKe = getVal('pertemuanKe');
+        const infoAlokasi = `${getVal('alokasiWaktu')} (Pertemuan Ke-${pertemuanKe})`;
+
+        let dplHtml = '';
+        if (Array.isArray(data.dimensiProfilLulusan)) {
+            data.dimensiProfilLulusan.forEach(d => {
+                dplHtml += `<p style="margin-bottom: 4px;"><strong>${d.nama}</strong>: ${d.uraian}</p>`;
+            });
+        }
+
+        let indikatorHtml = '<ol class="list-custom">';
+        if (Array.isArray(data.indikatorTP)) {
+            data.indikatorTP.forEach(ind => {
+                indikatorHtml += `<li>${ind}</li>`;
+            });
+        }
+        indikatorHtml += '</ol>';
+
+        // Render Pengalaman Belajar
+        let awalHtml = '<ol class="list-custom">' + data.pengalamanBelajar.kegiatanAwal.map(i => `<li>${i}</li>`).join('') + '</ol>';
+        
+        let intiHtml = '';
+        if (data.pengalamanBelajar.kegiatanIntiMemahami && data.pengalamanBelajar.kegiatanIntiMemahami.length > 0) {
+            intiHtml += '<p class="fw-bold mb-1" style="text-decoration: underline;">MEMAHAMI</p><ul class="list-custom mb-2">' + data.pengalamanBelajar.kegiatanIntiMemahami.map(i => `<li>${i}</li>`).join('') + '</ul>';
+        }
+        if (data.pengalamanBelajar.kegiatanIntiMengaplikasi && data.pengalamanBelajar.kegiatanIntiMengaplikasi.length > 0) {
+            intiHtml += '<p class="fw-bold mb-1" style="text-decoration: underline;">MENGAPLIKASI</p><ul class="list-custom mb-2">' + data.pengalamanBelajar.kegiatanIntiMengaplikasi.map(i => `<li>${i}</li>`).join('') + '</ul>';
+        }
+        if (data.pengalamanBelajar.kegiatanIntiMerefleksi && data.pengalamanBelajar.kegiatanIntiMerefleksi.length > 0) {
+            intiHtml += '<p class="fw-bold mb-1" style="text-decoration: underline;">MEREFLEKSI</p><ul class="list-custom mb-2">' + data.pengalamanBelajar.kegiatanIntiMerefleksi.map(i => `<li>${i}</li>`).join('') + '</ul>';
+        }
+
+        let penutupHtml = '<ol class="list-custom">' + data.pengalamanBelajar.kegiatanPenutup.map(i => `<li>${i}</li>`).join('') + '</ol>';
+
+        let html = `
+            <div class="doc-title">
+                RENCANA PEMBELAJARAN MENDALAM (RPM)<br>
+                KELAS 3 FASE B SEMESTER I<br>
+                TAHUN AJARAN ${getVal('tahunAjaran')}
+            </div>
+
+            <div class="section-header">INFORMASI UMUM</div>
+
+            <div class="fw-bold mb-2">A. IDENTITAS MODUL</div>
+            <table class="doc-table">
+                <tr>
+                    <td class="table-sublabel">NAMA PENYUSUN</td>
+                    <td>: ${getVal('namaGuru')}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">NAMA SEKOLAH</td>
+                    <td>: ${getVal('namaSekolah')}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">TAHUN AJARAN</td>
+                    <td>: ${getVal('tahunAjaran')}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">MATA PELAJARAN</td>
+                    <td>: ${getVal('mapel')}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">KELAS/SEMESTER/FASE</td>
+                    <td>: ${getVal('kelasSemester')}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">BAB/TOPIK</td>
+                    <td>: ${getVal('babTopik')}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">ALOKASI WAKTU</td>
+                    <td>: ${infoAlokasi}</td>
+                </tr>
+            </table>
+
+            <div class="fw-bold mb-2">B. IDENTIFIKASI</div>
+            <table class="doc-table">
+                <tr>
+                    <th colspan="2">IDENTIFIKASI MURID</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Pengetahuan Awal</td>
+                    <td>${data.identifikasiMurid.pengetahuanAwal}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Minat Belajar</td>
+                    <td>${data.identifikasiMurid.minatBelajar}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Latar Belakang</td>
+                    <td>${data.identifikasiMurid.latarBelakang}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Kebutuhan Belajar</td>
+                    <td>${data.identifikasiMurid.kebutuhanBelajar}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">IDENTIFIKASI MATERI</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Jenis Pengetahuan</td>
+                    <td>${data.identifikasiMateri.jenisPengetahuan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Relevansi dengan Kehidupan Nyata</td>
+                    <td>${data.identifikasiMateri.relevansiKehidupan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Tingkat Kesulitan</td>
+                    <td>${data.identifikasiMateri.tingkatKesulitan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Struktur Materi</td>
+                    <td>${data.identifikasiMateri.strukturMateri}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Integrasi Nilai dan Karakter</td>
+                    <td>${data.identifikasiMateri.integrasiNilai}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">TOPIK DAN MATERI PEMBELAJARAN</th>
+                </tr>
+                <tr>
+                    <td colspan="2">${getVal('materiPembelajaran').replace(/\n/g, '<br>')}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">DIMENSI PROFIL LULUSAN</th>
+                </tr>
+                <tr>
+                    <td colspan="2">${dplHtml}</td>
+                </tr>
+            </table>
+
+            <div class="section-header">DESAIN PEMBELAJARAN</div>
+
+            <div class="fw-bold mb-2">C. DESAIN PEMBELAJARAN</div>
+            <table class="doc-table">
+                <tr>
+                    <td class="table-sublabel">CAPAIAN PEMBELAJARAN</td>
+                    <td>${data.capaianPembelajaran}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">LINTAS DISIPLIN ILMU</td>
+                    <td>${data.lintasDisiplinIlmu}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">TUJUAN PEMBELAJARAN</td>
+                    <td>${getVal('tujuanPembelajaran')}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">INDIKATOR TUJUAN PEMBELAJARAN</td>
+                    <td>${indikatorHtml}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">TOPIK PEMBELAJARAN</td>
+                    <td>${getVal('babTopik')}</td>
+                </tr>
+            </table>
+
+            <div class="fw-bold mb-2">D. KERANGKA PEMBELAJARAN</div>
+            <table class="doc-table">
+                <tr>
+                    <th colspan="2">PRAKTIK PEDAGOGIS</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Pendekatan Pembelajaran</td>
+                    <td>${data.praktikPedagogis.pendekatan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Model Pembelajaran</td>
+                    <td>${data.praktikPedagogis.model}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Metode Pembelajaran</td>
+                    <td>${data.praktikPedagogis.metode}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Strategi Pembelajaran</td>
+                    <td>${data.praktikPedagogis.strategi}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">MITRA PEMBELAJARAN</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Guru</td>
+                    <td>${data.mitraPembelajaran.guru}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Murid</td>
+                    <td>${data.mitraPembelajaran.murid}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Teman Sebaya</td>
+                    <td>${data.mitraPembelajaran.temanSebaya}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Orang Tua</td>
+                    <td>${data.mitraPembelajaran.orangTua}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">LINGKUNGAN PEMBELAJARAN</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Ruang Fisik</td>
+                    <td>${data.lingkunganPembelajaran.ruangFisik}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Ruang Virtual</td>
+                    <td>${data.lingkunganPembelajaran.ruangVirtual}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Ruang Sosial</td>
+                    <td>${data.lingkunganPembelajaran.ruangSosial}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Budaya Belajar</td>
+                    <td>${data.lingkunganPembelajaran.budayaBelajar}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">PEMANFAATAN DIGITAL</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Media Pembelajaran</td>
+                    <td>${data.pemanfaatanDigital.media}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Bahan Ajar</td>
+                    <td>${data.pemanfaatanDigital.bahanAjar}</td>
+                </tr>
+            </table>
+
+            <div class="section-header">PELAKSANAAN & ASESMEN</div>
+
+            <div class="fw-bold mb-2">E. PENGALAMAN BELAJAR</div>
+            <table class="doc-table">
+                <tr>
+                    <th style="width: 25%;">KEGIATAN AWAL<br><small class="text-muted fw-normal">(10 Menit)</small></th>
+                    <td>${awalHtml}</td>
+                </tr>
+                <tr>
+                    <th>KEGIATAN INTI<br><small class="text-muted fw-normal">(PERTEMUAN KE-${pertemuanKe})<br>(50 Menit)</small></th>
+                    <td>${intiHtml}</td>
+                </tr>
+                <tr>
+                    <th>KEGIATAN PENUTUP<br><small class="text-muted fw-normal">(10 Menit)</small></th>
+                    <td>${penutupHtml}</td>
+                </tr>
+            </table>
+
+            <div class="fw-bold mb-2">F. ASESMEN</div>
+            <table class="doc-table">
+                <tr>
+                    <th colspan="2">DIAGNOSTIK AWAL</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Teknik / Tujuan</td>
+                    <td><strong>Teknik:</strong> ${data.asesmen.diagnostik.teknik}<br><strong>Tujuan:</strong> ${data.asesmen.diagnostik.tujuan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Instrumen</td>
+                    <td>${data.asesmen.diagnostik.instrumen}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">ASESMEN FORMATIF</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Teknik / Tujuan</td>
+                    <td><strong>Teknik:</strong> ${data.asesmen.formatif.teknik}<br><strong>Tujuan:</strong> ${data.asesmen.formatif.tujuan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Instrumen</td>
+                    <td>${data.asesmen.formatif.instrumen}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">ASESMEN SUMATIF AKHIR</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Teknik / Tujuan</td>
+                    <td><strong>Teknik:</strong> ${data.asesmen.sumatif.teknik}<br><strong>Tujuan:</strong> ${data.asesmen.sumatif.tujuan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Bentuk Soal</td>
+                    <td>${data.asesmen.sumatif.bentukSoal}</td>
+                </tr>
+            </table>
+
+            <div class="fw-bold mb-2">G. REMEDIAL DAN PENGAYAAN</div>
+            <table class="doc-table">
+                <tr>
+                    <th colspan="2">REMEDIAL</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Sasaran & Tujuan</td>
+                    <td><strong>Sasaran:</strong> ${data.remedialPengayaan.remedial.sasaran}<br><strong>Tujuan:</strong> ${data.remedialPengayaan.remedial.tujuan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Teknik</td>
+                    <td>${data.remedialPengayaan.remedial.teknik}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">PENGAYAAN</th>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Sasaran & Tujuan</td>
+                    <td><strong>Sasaran:</strong> ${data.remedialPengayaan.pengayaan.sasaran}<br><strong>Tujuan:</strong> ${data.remedialPengayaan.pengayaan.tujuan}</td>
+                </tr>
+                <tr>
+                    <td class="table-sublabel">Teknik</td>
+                    <td>${data.remedialPengayaan.pengayaan.teknik}</td>
+                </tr>
+            </table>
+
+            <div class="fw-bold mb-2">H. REFLEKSI MURID DAN GURU</div>
+            <table class="doc-table">
+                <tr>
+                    <th style="width: 25%;">REFLEKSI MURID</th>
+                    <td>
+                        <ul class="list-custom">
+                            ${data.refleksi.refleksiMurid.map(r => `<li>"${r}"</li>`).join('')}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>REFLEKSI GURU</th>
+                    <td>
+                        <ul class="list-custom">
+                            ${data.refleksi.refleksiGuru.map(r => `<li>${r}</li>`).join('')}
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Tanda Tangan -->
+            <table class="signature-table">
+                <tr>
+                    <td>
+                        Mengetahui,<br>
+                        Kepala Sekolah<br><br><br><br>
+                        <strong><u>${getVal('namaKepsek')}</u></strong><br>
+                        NIP. ${getVal('nipKepsek')}
+                    </td>
+                    <td>
+                        ${getVal('tempatTanggal')}<br>
+                        Guru Kelas 3A<br><br><br><br>
+                        <strong><u>${getVal('namaGuru')}</u></strong><br>
+                        NIP. ${getVal('nipGuru')}
+                    </td>
+                </tr>
+            </table>
+        `;
+
+        document.getElementById('documentOutput').innerHTML = html;
+    }
+
+    function copyDocumentText() {
+        const docEl = document.getElementById('documentOutput');
+        const range = document.createRange();
+        range.selectNode(docEl);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        
+        try {
+            document.execCommand('copy');
+            Swal.fire('Berhasil Disalin!', 'Teks dokumen berhasil disalin. Anda dapat menempelkannya di Microsoft Word.', 'success');
+        } catch (err) {
+            Swal.fire('Gagal', 'Gagal menyalin teks secara otomatis.', 'error');
+        }
+        window.getSelection().removeAllRanges();
+    }
+</script>
+</body>
+</html>
